@@ -3,7 +3,7 @@
 /*
  * This file is part of Arrounded
  *
- * (c) Madewithlove <ehtnam6@gmail.com>
+ * (c) Madewithlove <heroes@madewithlove.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
