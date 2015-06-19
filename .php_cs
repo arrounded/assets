@@ -4,7 +4,7 @@ use Symfony\CS\Finder\DefaultFinder;
 use Symfony\CS\Fixer\Contrib\HeaderCommentFixer;
 use Symfony\CS\FixerInterface;
 
-$finder = DefaultFinder::create()->in(['bin', 'src', 'tests']);
+$finder = DefaultFinder::create()->in(['src', 'tests']);
 $header = <<< EOF
 This file is part of Arrounded
 

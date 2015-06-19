@@ -1,10 +1,20 @@
 <?php
+
+/*
+ * This file is part of Arrounded
+ *
+ * (c) Madewithlove <ehtnam6@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Arrounded\Assets;
 
 class AssetsReplacerTest extends AssetsTestCase
 {
     /**
-     * @type AssetsHandler
+     * @var AssetsHandler
      */
     protected $assets;
 
@@ -14,13 +24,13 @@ class AssetsReplacerTest extends AssetsTestCase
             'global' => [
                 'css' => [
                     'foo.css',
-                    'bar.css'
+                    'bar.css',
                 ],
-                'js'  => [
+                'js' => [
                     'foo.js',
-                    'bar.js'
-                ]
-            ]
+                    'bar.js',
+                ],
+            ],
         ]);
     }
 
@@ -28,9 +38,9 @@ class AssetsReplacerTest extends AssetsTestCase
     {
         $replacer = new AssetsReplacer($this->assets);
 
-        $twig     = file_get_contents(__DIR__.'/../views/foo.twig');
+        $twig = file_get_contents(__DIR__.'/../views/foo.twig');
         $replaced = $replacer->replaceIn($twig);
-        $matcher  = <<<EOF
+        $matcher = <<<EOF
 <!-- build:css builds/css/global.css -->
 <link rel="stylesheet" href="foo.css">
 <link rel="stylesheet" href="bar.css">
@@ -54,9 +64,9 @@ EOF;
     {
         $replacer = new AssetsReplacer($this->assets);
 
-        $twig     = file_get_contents(__DIR__.'/../views/bar.blade.php');
+        $twig = file_get_contents(__DIR__.'/../views/bar.blade.php');
         $replaced = $replacer->replaceIn($twig);
-        $matcher  = <<<EOF
+        $matcher = <<<EOF
 <!-- build:css builds/css/global.css -->
 <link rel="stylesheet" href="foo.css">
 <link rel="stylesheet" href="bar.css">
@@ -76,9 +86,9 @@ EOF;
     {
         $replacer = new AssetsReplacer($this->assets);
 
-        $twig     = file_get_contents(__DIR__.'/../views/baz.php');
+        $twig = file_get_contents(__DIR__.'/../views/baz.php');
         $replaced = $replacer->replaceIn($twig);
-        $matcher  = <<<EOF
+        $matcher = <<<EOF
 <!-- build:css builds/css/global.css -->
 <link rel="stylesheet" href="foo.css">
 <link rel="stylesheet" href="bar.css">

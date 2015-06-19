@@ -1,10 +1,20 @@
 <?php
+
+/*
+ * This file is part of Arrounded
+ *
+ * (c) Madewithlove <ehtnam6@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Arrounded\Assets;
 
 class AssetsHandlerTest extends AssetsTestCase
 {
     /**
-     * @type AssetsHandler
+     * @var AssetsHandler
      */
     protected $assets;
 
@@ -16,7 +26,7 @@ class AssetsHandlerTest extends AssetsTestCase
                     'foo.css',
                     'bar.css',
                 ],
-                'js'  => [
+                'js' => [
                     'foo.js',
                     'bar.js',
                 ],
@@ -26,7 +36,7 @@ class AssetsHandlerTest extends AssetsTestCase
 
     public function testCanGetStylesInCollection()
     {
-        $styles  = $this->assets->styles('global');
+        $styles = $this->assets->styles('global');
         $matcher = <<<EOF
 <!-- build:css builds/css/global.css -->
 <link rel="stylesheet" href="foo.css">
@@ -39,7 +49,7 @@ EOF;
 
     public function testCanGetScriptsInCollection()
     {
-        $styles  = $this->assets->scripts('global');
+        $styles = $this->assets->scripts('global');
         $matcher = <<<EOF
 <!-- build:js builds/js/global.js -->
 <script src="foo.js"></script>

@@ -1,10 +1,20 @@
 <?php
+
+/*
+ * This file is part of Arrounded
+ *
+ * (c) Madewithlove <ehtnam6@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Arrounded\Assets;
 
 class AssetsHandler
 {
     /**
-     * @type array
+     * @var array
      */
     private $collections;
 
@@ -59,15 +69,15 @@ class AssetsHandler
         }
 
         // Expand paths
-        $assets     = [];
+        $assets = [];
         $collection = array_get($this->collections, $collection.'.'.$type, []);
-        $negated    = array_filter($collection, function ($asset) {
-            return substr($asset, 0, 1) == '!';
+        $negated = array_filter($collection, function ($asset) {
+            return substr($asset, 0, 1) === '!';
         });
         $collection = array_diff($collection, $negated);
 
         foreach ($collection as $asset) {
-            $asset  = $this->expandPaths($asset, $negated);
+            $asset = $this->expandPaths($asset, $negated);
             $assets = array_merge($assets, $asset);
         }
 
@@ -87,9 +97,9 @@ class AssetsHandler
         $assets = $this->getCollection($collection, $type);
 
         // Create HTML tags
-        $html    = [];
+        $html = [];
         $pattern = $type === 'css' ? '<link rel="stylesheet" href="%s">' : '<script src="%s"></script>';
-        $html[]  = sprintf('<!-- build:%s builds/%s/%s.%s -->', $type, $type, $collection, $type);
+        $html[] = sprintf('<!-- build:%s builds/%s/%s.%s -->', $type, $type, $collection, $type);
         foreach ($assets as $asset) {
             $html[] = sprintf($pattern, $asset);
         }
@@ -129,7 +139,7 @@ class AssetsHandler
         }, $asset);
 
         $asset = array_filter($asset, function ($file) use ($negated) {
-            return !in_array('!'.$file, $negated);
+            return !in_array('!'.$file, $negated, true);
         });
 
         // Sort assets

@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of Arrounded
+ *
+ * (c) Madewithlove <ehtnam6@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Arrounded\Assets;
 
 use Illuminate\Support\Fluent;
@@ -37,7 +47,7 @@ class JavascriptBridgeTest extends AssetsTestCase
         ]);
 
         $rendered = JavascriptBridge::render();
-        $matcher  = <<<EOF
+        $matcher = <<<EOF
 \tvar foo = [{"foo":"bar"}];
 \tvar baz = "qux";
 
@@ -52,7 +62,7 @@ EOF;
         JavascriptBridge::add(['model' => $model]);
 
         $rendered = JavascriptBridge::render();
-        $matcher  = <<<EOF
+        $matcher = <<<EOF
 \tvar model = {"foo":"bar"};
 
 EOF;
@@ -66,7 +76,7 @@ EOF;
         JavascriptBridge::add(['foo' => 'bar']);
 
         $rendered = JavascriptBridge::render();
-        $matcher  = <<<EOF
+        $matcher = <<<EOF
 \tvar Arrounded = {};
 \tArrounded.foo = "bar";
 

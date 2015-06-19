@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of Arrounded
+ *
+ * (c) Madewithlove <ehtnam6@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Arrounded\Assets;
 
 use Symfony\Component\Console\Output\NullOutput;
@@ -8,29 +18,29 @@ use Symfony\Component\Finder\Finder;
 class AssetsReplacer
 {
     /**
-     * @type OutputInterface
+     * @var OutputInterface
      */
     protected $output;
     /**
-     * @type AssetsHandler
+     * @var AssetsHandler
      */
     protected $handler;
 
     /**
-     * @type string
+     * @var string
      */
     protected $matcher = '/({{|<\?=) *Assets[\.:]{1,2}(styles|scripts)\(["\'](.+)["\']\)(\|raw)? *(}}|\?>)/';
 
     /**
      * AssetsReplacer constructor.
      *
-     * @param AssetsHandler   $handler
+     * @param AssetsHandler        $handler
      * @param OutputInterface|null $output
      */
     public function __construct(AssetsHandler $handler, OutputInterface $output = null)
     {
         $this->handler = $handler;
-        $this->output  = $output ?: new NullOutput();
+        $this->output = $output ?: new NullOutput();
     }
 
     /**
@@ -50,8 +60,8 @@ class AssetsReplacer
     {
         // List all views
         $finder = new Finder();
-        $files  = $finder->files()->in($folder)->getIterator();
-        $files  = array_keys(iterator_to_array($files));
+        $files = $finder->files()->in($folder)->getIterator();
+        $files = array_keys(iterator_to_array($files));
 
         // Replace in views
         foreach ($files as $file) {
@@ -81,7 +91,7 @@ class AssetsReplacer
      */
     protected function replaceAssetsCalls($matches)
     {
-        list(,, $type, $container) = $matches;
+        list(, , $type, $container) = $matches;
 
         return $this->handler->$type($container);
     }

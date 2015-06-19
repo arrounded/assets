@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of Arrounded
+ *
+ * (c) Madewithlove <ehtnam6@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Arrounded\Assets;
 
 use Illuminate\Contracts\Support\Jsonable;
@@ -6,16 +16,16 @@ use Illuminate\Contracts\Support\Jsonable;
 class JavascriptBridge
 {
     /**
-     * A module to namespace the variables in
+     * A module to namespace the variables in.
      *
-     * @type string
+     * @var string
      */
     protected static $namespace;
 
     /**
      * And array of data to pass to Javascript.
      *
-     * @type array
+     * @var array
      */
     protected static $data = [];
 
@@ -48,7 +58,7 @@ class JavascriptBridge
     }
 
     /**
-     * Purge the held data
+     * Purge the held data.
      */
     public static function purge()
     {
@@ -79,7 +89,7 @@ class JavascriptBridge
 
         foreach (static::$data as $key => $value) {
             $encoded = $value instanceof Jsonable ? $value->toJson() : json_encode($value);
-            $key     = static::$namespace ? static::$namespace.'.'.$key : 'var '.$key;
+            $key = static::$namespace ? static::$namespace.'.'.$key : 'var '.$key;
             $rendered .= sprintf("\t%s = %s;".PHP_EOL, $key, $encoded);
         }
 
