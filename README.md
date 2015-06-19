@@ -32,7 +32,13 @@ To use the assets pipeline create a `config/assets.php` file. In it you can defi
 ];
 ```
 
-Then add the facade to `config/app.php`:
+Add its service provider in `config/app.php`
+
+```php
+Arrounded\Assets\ServiceProvider::class,
+```
+
+Then add the facade in the same file:
 
 ```php
 'Assets' => Arrounded\Assets\Facades\Assets::class,
