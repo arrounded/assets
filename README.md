@@ -1,5 +1,9 @@
 # Arrounded/Assets
 
+[![Build Status](http://img.shields.io/travis/arrounded/assets.svg?style=flat-square)](https://travis-ci.org/arrounded/assets)
+[![Latest Stable Version](http://img.shields.io/packagist/v/anahkiasen/assets.svg?style=flat-square)](https://packagist.org/packages/anahkiasen/assets)
+[![Total Downloads](http://img.shields.io/packagist/dt/anahkiasen/assets.svg?style=flat-square)](https://packagist.org/packages/anahkiasen/assets)
+
 ## Install
 
 Via Composer
