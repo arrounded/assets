@@ -3,7 +3,9 @@
     "description": "The description of the module",
     "license": "MIT",
     "keywords": [
-        "laravel"
+        "laravel",
+        "assets",
+        "usemin"
     ],
     "authors": [
         {
