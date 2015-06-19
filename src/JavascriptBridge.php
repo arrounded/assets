@@ -29,6 +29,14 @@ class JavascriptBridge
     }
 
     /**
+     * Purge the held data
+     */
+    public static function purge()
+    {
+        static::$data = [];
+    }
+
+    /**
      * Get the data.
      *
      * @return array
