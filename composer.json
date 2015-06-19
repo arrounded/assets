@@ -1,5 +1,5 @@
 {
-    "name": "arrounded/:package_name",
+    "name": "arrounded/assets",
     "description": "The description of the module",
     "license": "MIT",
     "keywords": [
@@ -12,22 +12,26 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.5.9",
+        "symfony/finder": "^2.7",
+        "illuminate/console": "^5.1",
+        "illuminate/support": "^5.1"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "2.0.*@dev",
         "phpunit/phpunit": "^4.7",
         "mockery/mockery": "^0.9.4",
-        "phpspec/phpspec": "^2.2"
+        "phpspec/phpspec": "^2.2",
+        "symfony/var-dumper": "^2.7"
     },
     "autoload": {
         "psr-4": {
-            "Arrounded\\:package_name\\": "src"
+            "Arrounded\\Assets\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Arrounded\\:package_name\\": "tests"
+            "Arrounded\\Assets\\": "tests"
         }
     },
     "scripts": {
