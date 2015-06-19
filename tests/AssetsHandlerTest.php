@@ -49,4 +49,19 @@ EOF;
 
         $this->assertEquals($matcher, $styles);
     }
+
+    public function testCanIgnoreFiles()
+    {
+        $assets = new AssetsHandler([
+            'global' => [
+                'css' => [
+                    '*.php',
+                    '!AssetsHandler.php',
+                ],
+            ],
+        ]);
+
+        $styles = $assets->styles('global');
+        $this->assertNotContains('AssetsHandler.php', $styles);
+    }
 }
