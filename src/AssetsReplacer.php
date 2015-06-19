@@ -1,60 +1,75 @@
 <?php
 namespace Arrounded\Assets;
 
-use Illuminate\Console\Command;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
-class AssetsReplacer extends Command
+class AssetsReplacer
 {
     /**
-     * The console command name.
-     *
-     * @type string
+     * @type OutputInterface
      */
-    protected $name = 'assets:replace';
-
-    /**
-     * The console command description.
-     *
-     * @type string
-     */
-    protected $description = 'Replace calls to assets collections in the files with their minified version';
-
+    protected $output;
     /**
      * @type AssetsHandler
      */
     protected $handler;
 
     /**
-     * @param AssetsHandler $handler
+     * @type string
      */
-    public function __construct(AssetsHandler $handler)
-    {
-        parent::__construct();
+    protected $matcher = '/({{|<\?=) *Assets[\.:]{1,2}(styles|scripts)\(["\'](.+)["\']\)(\|raw)? *(}}|\?>)/';
 
+    /**
+     * AssetsReplacer constructor.
+     *
+     * @param AssetsHandler   $handler
+     * @param OutputInterface|null $output
+     */
+    public function __construct(AssetsHandler $handler, OutputInterface $output = null)
+    {
         $this->handler = $handler;
+        $this->output  = $output ?: new NullOutput();
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    public function setOutput($output)
+    {
+        $this->output = $output;
     }
 
     /**
      * Execute the command.
+     *
+     * @param string $folder
      */
-    public function fire()
+    public function replaceInFolder($folder)
     {
-        $views = app_path('views');
-
         // List all views
         $finder = new Finder();
-        $views  = $finder->files()->in($views)->getIterator();
-        $views  = array_keys(iterator_to_array($views));
+        $files  = $finder->files()->in($folder)->getIterator();
+        $files  = array_keys(iterator_to_array($files));
 
         // Replace in views
-        $matcher = '/{{ ?Assets\.(styles|scripts)\(["\'](.+)["\']\)(\|raw)? ?}}/';
-        foreach ($views as $view) {
-            $this->comment('Replacing calls in '.basename($view));
-            $contents = file_get_contents($view);
-            $contents = preg_replace_callback($matcher, [$this, 'replaceAssetsCalls'], $contents);
-            file_put_contents($view, $contents);
+        foreach ($files as $file) {
+            $this->output->writeln('<comment>Replacing calls in '.basename($file).'</comment>');
+            $contents = file_get_contents($file);
+            $contents = $this->replaceIn($contents);
+            file_put_contents($file, $contents);
         }
+    }
+
+    /**
+     * @param string $contents
+     *
+     * @return string
+     */
+    public function replaceIn($contents)
+    {
+        return preg_replace_callback($this->matcher, [$this, 'replaceAssetsCalls'], $contents);
     }
 
     /**
@@ -66,7 +81,7 @@ class AssetsReplacer extends Command
      */
     protected function replaceAssetsCalls($matches)
     {
-        list(, $type, $container) = $matches;
+        list(,, $type, $container) = $matches;
 
         return $this->handler->$type($container);
     }
