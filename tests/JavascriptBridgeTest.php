@@ -59,4 +59,19 @@ EOF;
 
         $this->assertEquals($matcher, $rendered);
     }
+
+    public function testCanNamespaceVariables()
+    {
+        JavascriptBridge::setNamespace('Arrounded');
+        JavascriptBridge::add(['foo' => 'bar']);
+
+        $rendered = JavascriptBridge::render();
+        $matcher  = <<<EOF
+\tvar Arrounded = {};
+\tArrounded.foo = "bar";
+
+EOF;
+
+        $this->assertEquals($matcher, $rendered);
+    }
 }

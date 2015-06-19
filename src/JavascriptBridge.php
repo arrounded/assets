@@ -6,11 +6,30 @@ use Illuminate\Contracts\Support\Jsonable;
 class JavascriptBridge
 {
     /**
+     * A module to namespace the variables in
+     *
+     * @type string
+     */
+    protected static $namespace;
+
+    /**
      * And array of data to pass to Javascript.
      *
      * @type array
      */
     protected static $data = [];
+
+    /**
+     * @param string $namespace
+     */
+    public static function setNamespace($namespace)
+    {
+        self::$namespace = $namespace;
+    }
+
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////// DATA ////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
 
     /**
      * Add data to pass.
@@ -54,9 +73,14 @@ class JavascriptBridge
     public static function render()
     {
         $rendered = '';
+        if (static::$namespace) {
+            $rendered .= "\tvar ".static::$namespace.' = {};'.PHP_EOL;
+        }
+
         foreach (static::$data as $key => $value) {
             $encoded = $value instanceof Jsonable ? $value->toJson() : json_encode($value);
-            $rendered .= sprintf("\tvar %s = %s;".PHP_EOL, $key, $encoded);
+            $key     = static::$namespace ? static::$namespace.'.'.$key : 'var '.$key;
+            $rendered .= sprintf("\t%s = %s;".PHP_EOL, $key, $encoded);
         }
 
         return $rendered;
